@@ -7,13 +7,14 @@ Desarrollo de la práctica final de CNVR curso 2020/21
 ------------
 
 ## Objetivo:
+
 Automatizar el despliegue sobre Openstack de una aplicación utilizando Heat.
-Desarrollo de los scripts, plantillas y otros ficheros de configuración necesarios para desplegar de forma automática en una nube Openstack utilizando los servicios de orquestación Heat de
-una aplicación escalable compuesta por servidores web, base de datos, balanceadores y firewall
+Desarrollo de los scripts, plantillas y otros ficheros de configuración necesarios para desplegar de forma automática en una nube Openstack utilizando los servicios de orquestación Heat de una aplicación escalable compuesta por servidores web, base de datos, balanceadores y firewall
+
 ------------
 
 ## Escenario:
-![Escenario](https://github.com/RAULTG97/PracticaFinalRDSV_Grupo12/blob/main/PracticaFinalRDSV.png)
+![Escenario](https://github.com/RAULTG97/PracticaFinalCNVR_Grupo1/blob/main/images/escenario.png)
 
 
 - Tres servidores web que alojen la aplicación web que soporta el servicio
