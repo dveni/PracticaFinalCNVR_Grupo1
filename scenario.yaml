@@ -1,0 +1,108 @@
+heat_template_version: 2017-02-24
+description: Plantilla para definir el escenario en Openstack practica final CNVR
+parameters:
+  key_name:
+    type: string
+    label: Key Name
+    description: Name of key-pair to be used for compute instance
+  router_name:
+    type: string
+    label: router name
+    description: router name
+    default: r0
+  image_id:
+    type: string
+    label: Image ID
+    description: Image to be used for compute instance
+    default: cirros-0.3.4-x86_64-vnx
+    constraints:
+      - allowed_values: [cirros-0.3.4-x86_64-vnx, xenial-server-cloudimg-amd64-vnx]
+        description: >
+          Value must be one of cirros-0.3.4-x86_64-vnx or
+          xenial-server-cloudimg-amd64-vnx.
+  instance_type:
+    type: string
+    label: Instance Type
+    description: Type of instance (flavor) to be used
+    constraints:
+      - allowed_values: [m1.medium, m1.large, m1.xlarge]
+        description: 'Value must be one of m1.medium, m1.large or m1.xlarge.'
+resources:
+  key_pair:
+    type: 'OS::Nova::KeyPair'
+    properties:
+      name: { get_param: key_name }
+      save_private_key: true
+  net0:
+    type: 'OS::Neutron::Net'
+    properties:
+      name: net0
+  subnet0:
+    type: 'OS::Neutron::Subnet'
+    properties:
+      name: subnet0
+      network: { get_resource: net0 }
+      cidr: 10.1.1.0/24
+      allocation_pools: [{start: 10.1.1.8, end: 10.1.1.100}]
+      gateway_ip: 10.1.1.1
+      dns_nameservers: [8.8.8.8]
+  router:
+    type: 'OS::Neutron::Router'
+    properties:
+      name: { get_param: router_name }
+      external_gateway_info: {network: ExtNet}
+  router_interface:
+    type: 'OS::Neutron::RouterInterface'
+    properties:
+      router: { get_resource: router }
+      subnet: subnet0
+  web_secgroup:
+    type: 'OS::Neutron::SecurityGroup'
+    properties:
+      rules:
+        - protocol: tcp
+          remote_ip_prefix: 0.0.0.0/0
+          port_range_min: 80
+          port_range_max: 80
+        - protocol: tcp
+          remote_ip_prefix: 0.0.0.0/0
+          port_range_min: 22
+          port_range_max: 22
+        - protocol: icmp
+          remote_ip_prefix: 0.0.0.0/0
+          port_range_min: 0
+          port_range_max: 0
+  floating_ip:
+    type: 'OS::Neutron::FloatingIP'
+    properties:
+      floating_network: ExtNet
+  vm2_port:
+    type: 'OS::Neutron::Port'
+    properties:
+      network: { get_resource: net0 }
+      security_groups:
+        - default 
+        - { get_resource: web_secgroup }
+      fixed_ips:
+        - subnet_id: { get_resource: subnet0 }
+  vm2:
+    type: 'OS::Nova::Server'
+    properties:
+      name: vm2
+      image: { get_param: image_id }
+      flavor: { get_param: instance_type }
+      key_name: { get_param: key_name }
+      networks:
+        - port: { get_resource: vm2_port } 
+  association:
+    type: 'OS::Neutron::FloatingIPAssociation'
+    properties:
+      floatingip_id: { get_resource: floating_ip }
+      port_id: { get_resource: vm2_port }
+outputs:
+  instance_private_ip:
+    description: The IP address of the deployed instance
+    value: { get_attr:[vm2, first_address] }
+  instance_public_ip:
+    description: Floating IP address of server1
+    value: { get_attr:[floating_ip, floating_ip_address] }
