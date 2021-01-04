@@ -165,7 +165,7 @@ resources:
         - subnet_id: { get_resource: subnet2 }
   s_admin_floating_ip:
     type: 'OS::Neutron::FloatingIP'
-    epends_on: [ s_admin_port1 ]
+    depends_on: [ s_admin_port1 ]
     properties:
       floating_network: ExtNet
       port_id: { get_resource: s_admin_port1}
