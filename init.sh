@@ -12,6 +12,7 @@ sudo vnx -f /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml -x
 #USAMOS INICIALMENTE PRIVILEGIOS DE USUARIO ADMIN PARA CREAR NUESTRO PROPIO USUARIO
 source bin/admin-openrc.sh
 openstack stack create -t create-project.yaml --parameter "project_name=group1project" --parameter "admin_name=group1user" --parameter "admin_password=xxxx" stackuser
+sleep 30
 #Alternativa para crearlo desde la linea de comandos de Openstack
 #openstack project create --domain default --description "CNVR Project Group 1" group1project
 #openstack user create --domain default --project group1project --password xxxx --description "User for group1project CNVR" group1user
