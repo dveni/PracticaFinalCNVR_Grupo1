@@ -15,7 +15,10 @@ sudo vnx -f /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml -x
 
 #CREATE ADMIN USER
 #USAMOS INICIALMENTE PRIVILEGIOS DE USUARIO ADMIN PARA CREAR NUESTRO PROPIO USUARIO
+
 source bin/admin-openrc.sh
+#VER SI LO HACEMOS CON CREATE-PROJECT.YAML
+#openstack stack create -t create-project.yml --parameter "project_name=group1project" --parameter "admin_name=group1user" --parameter "admin_password=xxxx" stack0
 openstack project create --domain default --description "CNVR Project Group 1" group1project
 openstack user create --domain default --project group1project --password xxxx --description "User for group1project CNVR" group1user
 openstack role add --project group1project --user group1user admin
@@ -29,3 +32,21 @@ openstack subnet create --network ExtNet --gateway 10.0.10.1 --dns-nameserver 10
 #CONFIGURE NAT
 EXT=`ifconfig | grep enp | awk '{print $1}' | tr -d ':'`
 sudo vnx_config_nat ExtNet $EXT
+
+#HEAT STACK
+openstack stack create -t scenario.yaml stack1
+#COMANDO CON PASO DE PARAMETROS
+#openstack stack create -t scenario.yml --parameter "key_name=key_group1" --parameter "network_name=net0" stack1
+
+#OBTENIDO DE CREATE-DEMO-SCENARIO DE VNX
+#group1_project_id=$(openstack project show group1project -c id -f value)
+#default_secgroup_id=$(openstack security group list -f value | grep default | grep $group1_project_id | cut -d " " -f1)
+
+#COMANDOS UTILES
+#openstack orchestration template validate -t scenario.yml
+#openstack stack list
+#openstack stack show stack1
+#openstack stack output show --all stack1
+#openstack stack output show -f json --all stack1
+#openstack stack output show -f json -c instance_ip --all stack1
+#openstack stack output show -c instance_ip --all stack1

@@ -1,0 +1,46 @@
+heat_template_version: 2016-04-08 
+ 
+description: CNVR PROJECT OPENSTACK
+ 
+parameters: 
+ 
+  project_name: 
+        type: string 
+        description: Name of Project
+   
+  admin_name: 
+        type: string 
+        description: Username of Project Admin  
+ 
+  admin_password: 
+        type: string 
+        description: Password for Project Admin  
+        hidden: true 
+ 
+resources: 
+ 
+  group1: 
+        type: OS::Keystone::Project 
+        properties: 
+          name: { get_param: project_name } 
+          domain: default 
+ 
+  group1_admin: 
+        type: OS::Keystone::User 
+        properties: 
+          name: { get_param: admin_name } 
+          password: { get_param: admin_password } 
+ 
+  group1_admin_role: 
+        type: OS::Keystone::UserRoleAssignment 
+        properties: 
+          user: { get_resource: group1_admin } 
+          roles:  
+            - {project: {get_resource: group1}, role: user} 
+ 
+  default_admin_role: 
+        type: OS::Keystone::UserRoleAssignment 
+        properties: 
+          user: admin 
+          roles:  
+          - {project: {get_resource: group1}, role: admin}
