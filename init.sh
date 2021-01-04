@@ -15,7 +15,6 @@ sudo vnx -f /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml -x
 
 #CREATE ADMIN USER
 #USAMOS INICIALMENTE PRIVILEGIOS DE USUARIO ADMIN PARA CREAR NUESTRO PROPIO USUARIO
-
 source bin/admin-openrc.sh
 #VER SI LO HACEMOS CON CREATE-PROJECT.YAML
 #openstack stack create -t create-project.yml --parameter "project_name=group1project" --parameter "admin_name=group1user" --parameter "admin_password=xxxx" stack0
@@ -34,7 +33,7 @@ EXT=`ifconfig | grep enp | awk '{print $1}' | tr -d ':'`
 sudo vnx_config_nat ExtNet $EXT
 
 #HEAT STACK
-openstack stack create -t scenario.yaml stack1
+#openstack stack create -t scenario.yaml stack1
 #COMANDO CON PASO DE PARAMETROS
 #openstack stack create -t scenario.yml --parameter "key_name=key_group1" --parameter "network_name=net0" stack1
 

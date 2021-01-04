@@ -1,12 +1,10 @@
 heat_template_version: 2017-02-24
 description: Plantilla para definir el escenario en Openstack practica final CNVR
-
 parameters:
   key_name:
     type: string
     label: Key Name
-    description: Name of key-pair to be used for the serversX
-  
+    description: Name of key-pair to be used for the serversX 
   image_id:
     type: string
     label: Image ID
@@ -19,6 +17,12 @@ parameters:
           xenial-server-cloudimg-amd64-vnx.
 
 resources:
+  security_group:
+    type: 'OS::Neutron::SecurityGroup'
+    properties:
+      description: Trafico este-oeste entre los servidores
+      name: open
+      rules: [{remote_ip_prefix: 0.0.0.0/0}]
   key_pair:
     type: 'OS::Nova::KeyPair'
     properties:
@@ -30,6 +34,7 @@ resources:
       name: net1
   subnet1:
     type: 'OS::Neutron::Subnet'
+    depends_on: [ net1 ]
     properties:
       name: subnet1
       network: { get_resource: net1 }
@@ -43,6 +48,7 @@ resources:
       name: net2
   subnet2:
     type: 'OS::Neutron::Subnet'
+    depends_on: [ net2 ]
     properties:
       name: subnet2
       network: { get_resource: net2 }
@@ -56,174 +62,142 @@ resources:
         network: ExtNet
   router_interface:
     type: 'OS::Neutron::RouterInterface'
+    depends_on: [ router, subnet1 ]
     properties:
       router: { get_resource: router }
       subnet: { get_resource: subnet1 }
   s1_port1:
     type: 'OS::Neutron::Port'
+    depends_on: [ subnet1, security_group ]
     properties:
       network: { get_resource: net1 }
-      security_groups:
-        - default (open)
-        - { get_resource: web_secgroup }
+      security_groups: [ open ]
       fixed_ips:
         - subnet_id: { get_resource: subnet1 }
-        #- ip_address: 10.100.0.10
   s1_port2:
     type: 'OS::Neutron::Port'
+    depends_on: [ subnet2, security_group ]
     properties:
       network: { get_resource: net2 }
-      security_groups:
-        - default (open)
-        - { get_resource: web_secgroup }
+      security_groups: [ open ]
       fixed_ips:
         - subnet_id: { get_resource: subnet2 }
   s1:
     type: 'OS::Nova::Server'
+    depends_on: [ key_pair, s1_port1, s1_port2 ]
     properties:
       name: s1
       image: cirros-0.3.4-x86_64-vnx
       flavor: m1.tiny
-      key_name: { get_resource: key_name }
+      key_name: { get_resource: key_pair }
       networks:
         - port: { get_resource: s1_port1 }
         - port: { get_resource: s1_port2 }
   s2_port1:
     type: 'OS::Neutron::Port'
+    depends_on: [ subnet1, security_group ]
     properties:
       network: { get_resource: net1 }
-      security_groups:
-        - default (open)
-        - { get_resource: web_secgroup }
+      security_groups: [ open ]
       fixed_ips:
         - subnet_id: { get_resource: subnet1 }
-        #- ip_address: 10.100.0.10
   s2_port2:
     type: 'OS::Neutron::Port'
+    depends_on: [ subnet2, security_group ]
     properties:
       network: { get_resource: net2 }
-      security_groups:
-        - default (open)
-        - { get_resource: web_secgroup }
+      security_groups: [ open ]
       fixed_ips:
         - subnet_id: { get_resource: subnet2 }
   s2:
     type: 'OS::Nova::Server'
+    depends_on: [ key_pair, s2_port1, s2_port2 ]
     properties:
       name: s2
       image: cirros-0.3.4-x86_64-vnx
       flavor: m1.tiny
-      key_name: { get_resource: key_name }
+      key_name: { get_resource: key_pair }
       networks:
         - port: { get_resource: s2_port1 }
         - port: { get_resource: s2_port2 }
   s3_port1:
     type: 'OS::Neutron::Port'
+    depends_on: [ subnet1, security_group ]
     properties:
       network: { get_resource: net1 }
-      security_groups:
-        - default (open)
-        - { get_resource: web_secgroup }
+      security_groups: [ open ]
       fixed_ips:
         - subnet_id: { get_resource: subnet1 }
-        #- ip_address: 10.100.0.10
   s3_port2:
     type: 'OS::Neutron::Port'
+    depends_on: [ subnet2, security_group ]
     properties:
       network: { get_resource: net2 }
-      security_groups:
-        - default (open)
-        - { get_resource: web_secgroup }
+      security_groups: [ open ]
       fixed_ips:
         - subnet_id: { get_resource: subnet2 }
   s3:
     type: 'OS::Nova::Server'
+    depends_on: [ key_pair, s3_port1, s3_port2 ]
     properties:
       name: s3
       image: cirros-0.3.4-x86_64-vnx
       flavor: m1.tiny
-      key_name: { get_resource: key_name }
+      key_name: { get_resource: key_pair }
       networks:
         - port: { get_resource: s3_port1 }
         - port: { get_resource: s3_port2 }
   s_admin_port1:
     type: 'OS::Neutron::Port'
+    depends_on: [ subnet1, security_group ]
     properties:
       network: { get_resource: net1 }
-      security_groups:
-        - default (open)
-        - { get_resource: web_secgroup }
+      security_groups: [ open ]
       fixed_ips:
         - subnet_id: { get_resource: subnet1 }
-        #- ip_address: 10.100.0.10
   s_admin_port2:
     type: 'OS::Neutron::Port'
+    depends_on: [ subnet2, security_group ]
     properties:
       network: { get_resource: net2 }
-      security_groups:
-        - default (open)
-        - { get_resource: web_secgroup }
+      security_groups: [ open ]
       fixed_ips:
         - subnet_id: { get_resource: subnet2 }
   s_admin_floating_ip:
     type: 'OS::Neutron::FloatingIP'
+    epends_on: [ s_admin_port1 ]
     properties:
       floating_network: ExtNet
       port_id: { get_resource: s_admin_port1}
   s_admin:
     type: 'OS::Nova::Server'
+    depends_on: [ key_pair, s_admin_port1, s_admin_port2, s_admin_floating_ip ]
     properties:
       name: s_admin
-      image: { get_param: image_id }
+      image: cirros-0.3.4-x86_64-vnx
       flavor: m1.tiny
-      key_name: { get_resource: key_name }
+      key_name: { get_resource: key_pair }
       networks:
         - port: { get_resource: s_admin_port1 }
         - port: { get_resource: s_admin_port2 }
   bbdd_port2:
     type: 'OS::Neutron::Port'
+    depends_on: [ subnet2, security_group ]
     properties:
       network: { get_resource: net2 }
-      security_groups:
-        - default (open)
-        - { get_resource: web_secgroup }
+      security_groups: [ open ]
       fixed_ips:
         - subnet_id: { get_resource: subnet2 }
   bbdd:
     type: 'OS::Nova::Server'
+    depends_on: [ key_pair, bbdd_port2 ]
     properties:
       name: bbdd
       image: cirros-0.3.4-x86_64-vnx
       flavor: m1.tiny
-      key_name: { get_resource: key_name }
+      key_name: { get_resource: key_pair }
       networks:
         - port: { get_resource: bbdd_port2 }
-
-
-
-
-
-
-  web_secgroup:
-    type: 'OS::Neutron::SecurityGroup'
-    properties:
-      rules:
-        - protocol: tcp
-          remote_ip_prefix: 0.0.0.0/0
-          port_range_min: 80
-          port_range_max: 80
-        - protocol: tcp
-          remote_ip_prefix: 0.0.0.0/0
-          port_range_min: 22
-          port_range_max: 22
-        - protocol: icmp
-          remote_ip_prefix: 0.0.0.0/0
-          port_range_min: 0
-          port_range_max: 0
-
-
-
-
 outputs:
   s_admin_floating_ip:
     description: ADMIN SERVER FLOATING IP
@@ -234,17 +208,15 @@ outputs:
   s_admin_private_ip_net2:
     description: ADMIN SERVER PRIVATE IP NET2
     value: { get_attr: [ s_admin, networks, net2, 0 ] }
-
-  instance_private_ip:
-    description: The IP address of the deployed instance
-    value: { get_attr:[s1, first_address] }
-  instance_public_ip:
-    description: Floating IP address of server1
-    value: { get_attr:[floating_ip, floating_ip_address] }
-
-  vm2_private_ip:
-        description: Private IP address of vm2
-        value: { get_attr: [ vm2, first_address ] }
-  vm2_public_ip:
-        description: Floating IP address of vm2
-        value: { get_attr: [ vm2_floating_ip, floating_ip_address ] }
+  s1_private_ip:
+        description: Private IP address of s1
+        value: { get_attr: [ s1, first_address ] }
+  s2_private_ip:
+        description: Private IP address of s2
+        value: { get_attr: [ s2, first_address ] }
+  s3_private_ip:
+        description: Private IP address of s3
+        value: { get_attr: [ s3, first_address ] }
+  bbdd_private_ip:
+        description: Private IP address of BBDD
+        value: { get_attr: [ bbdd, first_address ] }
