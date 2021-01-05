@@ -1,0 +1,15 @@
+#cloud-config
+hostname: webserver
+apt_update: true
+apt_upgrade: true
+packages:
+  - nodejs
+  - git
+
+#runcmd:
+#  - ifconfig ens4 up 
+#  - dhclient ens4
+#  - echo "nameserver 8.8.8.8" > /etc/resolv.conf
+#  - curl http://169.254.169.254/openstack/latest/meta_data.json > /home/index.html
+#  - cd /home
+#  - python -m SimpleHTTPServer 80

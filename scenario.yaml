@@ -1,5 +1,6 @@
 heat_template_version: 2017-02-24
 description: Plantilla para definir el escenario en Openstack practica final CNVR
+
 parameters:
   key_name:
     type: string
@@ -12,12 +13,13 @@ resources:
     properties:
       description: Trafico este-oeste entre los servidores
       name: open
-      rules: [{remote_ip_prefix: 0.0.0.0/0}]
+      rules: [{direction: ingress, remote_ip_prefix: 0.0.0.0/0}, {direction: egress, remote_ip_prefix: 0.0.0.0/0}]
   key_pair:
     type: 'OS::Nova::KeyPair'
     properties:
       name: { get_param: key_name }
       save_private_key: true
+
   net1:
     type: 'OS::Neutron::Net'
     properties:
@@ -32,6 +34,7 @@ resources:
       allocation_pools: [{start: 10.1.1.8, end: 10.1.1.100}]
       gateway_ip: 10.1.1.1
       dns_nameservers: [8.8.8.8]
+
   net2:
     type: 'OS::Neutron::Net'
     properties:
@@ -43,7 +46,8 @@ resources:
       name: subnet2
       network: { get_resource: net2 }
       cidr: 10.1.2.0/24
-      allocation_pools: [{start: 10.1.2.8, end: 10.1.2.100}] 
+      allocation_pools: [{start: 10.1.2.8, end: 10.1.2.100}]
+
   router:
     type: 'OS::Neutron::Router'
     properties:
@@ -56,6 +60,7 @@ resources:
     properties:
       router: { get_resource: router }
       subnet: { get_resource: subnet1 }
+
   s1_port1:
     type: 'OS::Neutron::Port'
     depends_on: [ subnet1, security_group ]
@@ -80,9 +85,12 @@ resources:
       image: xenial-server-cloudimg-amd64-vnx
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
+      user_data_format: SOFTWARE_CONFIG
+      user_data: { get_file: cloud-init/webServer.yaml }
       networks:
         - port: { get_resource: s1_port1 }
         - port: { get_resource: s1_port2 }
+
   s2_port1:
     type: 'OS::Neutron::Port'
     depends_on: [ subnet1, security_group ]
@@ -107,9 +115,12 @@ resources:
       image: xenial-server-cloudimg-amd64-vnx
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
+      user_data_format: SOFTWARE_CONFIG
+      user_data: { get_file: cloud-init/webServer.yaml }
       networks:
         - port: { get_resource: s2_port1 }
         - port: { get_resource: s2_port2 }
+
   s3_port1:
     type: 'OS::Neutron::Port'
     depends_on: [ subnet1, security_group ]
@@ -134,9 +145,12 @@ resources:
       image: xenial-server-cloudimg-amd64-vnx
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
+      user_data_format: SOFTWARE_CONFIG
+      user_data: { get_file: cloud-init/webServer.yaml }
       networks:
         - port: { get_resource: s3_port1 }
         - port: { get_resource: s3_port2 }
+
   s_admin_port1:
     type: 'OS::Neutron::Port'
     depends_on: [ subnet1, security_group ]
@@ -167,9 +181,12 @@ resources:
       image: xenial-server-cloudimg-amd64-vnx
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
+      user_data_format: SOFTWARE_CONFIG
+      user_data: { get_file: cloud-init/s_admin.yaml }
       networks:
         - port: { get_resource: s_admin_port1 }
         - port: { get_resource: s_admin_port2 }
+
   bbdd_port2:
     type: 'OS::Neutron::Port'
     depends_on: [ subnet2, security_group ]
@@ -186,8 +203,11 @@ resources:
       image: xenial-server-cloudimg-amd64-vnx
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
+      user_data_format: SOFTWARE_CONFIG
+      user_data: { get_file: cloud-init/bbdd.yaml }
       networks:
         - port: { get_resource: bbdd_port2 }
+
 outputs:
   s_admin_floating_ip:
     description: ADMIN SERVER FLOATING IP
@@ -199,14 +219,14 @@ outputs:
     description: ADMIN SERVER PRIVATE IP NET2
     value: { get_attr: [ s_admin, networks, net2, 0 ] }
   s1_private_ip:
-        description: Private IP address of s1
-        value: { get_attr: [ s1, first_address ] }
+    description: Private IP address of s1
+    value: { get_attr: [ s1, first_address ] }
   s2_private_ip:
-        description: Private IP address of s2
-        value: { get_attr: [ s2, first_address ] }
+    description: Private IP address of s2
+    value: { get_attr: [ s2, first_address ] }
   s3_private_ip:
-        description: Private IP address of s3
-        value: { get_attr: [ s3, first_address ] }
+    description: Private IP address of s3
+    value: { get_attr: [ s3, first_address ] }
   bbdd_private_ip:
-        description: Private IP address of BBDD
-        value: { get_attr: [ bbdd, first_address ] }
+    description: Private IP address of BBDD
+    value: { get_attr: [ bbdd, first_address ] }

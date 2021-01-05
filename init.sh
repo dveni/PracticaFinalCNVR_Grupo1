@@ -34,10 +34,13 @@ sudo vnx_config_nat ExtNet $EXT
 openstack stack create -t scenario.yaml --parameter "key_name=key_group1" stackscenario
 
 
+#FIREWALL
+#./firewallConfiguration.sh
 
-#OBTENIDO DE CREATE-DEMO-SCENARIO DE VNX
-#group1_project_id=$(openstack project show group1project -c id -f value)
-#default_secgroup_id=$(openstack security group list -f value | grep default | grep $group1_project_id | cut -d " " -f1)
+#LOAD BALANCER
+
+
+
 #COMANDOS UTILES
 #openstack orchestration template validate -t scenario.yaml
 #openstack stack list
