@@ -77,8 +77,8 @@ resources:
     depends_on: [ key_pair, s1_port1, s1_port2 ]
     properties:
       name: s1
-      image: cirros-0.3.4-x86_64-vnx
-      flavor: m1.tiny
+      image: xenial-server-cloudimg-amd64-vnx
+      flavor: m1.smaller
       key_name: { get_resource: key_pair }
       networks:
         - port: { get_resource: s1_port1 }
@@ -104,8 +104,8 @@ resources:
     depends_on: [ key_pair, s2_port1, s2_port2 ]
     properties:
       name: s2
-      image: cirros-0.3.4-x86_64-vnx
-      flavor: m1.tiny
+      image: xenial-server-cloudimg-amd64-vnx
+      flavor: m1.smaller
       key_name: { get_resource: key_pair }
       networks:
         - port: { get_resource: s2_port1 }
@@ -131,8 +131,8 @@ resources:
     depends_on: [ key_pair, s3_port1, s3_port2 ]
     properties:
       name: s3
-      image: cirros-0.3.4-x86_64-vnx
-      flavor: m1.tiny
+      image: xenial-server-cloudimg-amd64-vnx
+      flavor: m1.smaller
       key_name: { get_resource: key_pair }
       networks:
         - port: { get_resource: s3_port1 }
@@ -164,8 +164,8 @@ resources:
     depends_on: [ key_pair, s_admin_port1, s_admin_port2, s_admin_floating_ip ]
     properties:
       name: s_admin
-      image: cirros-0.3.4-x86_64-vnx
-      flavor: m1.tiny
+      image: xenial-server-cloudimg-amd64-vnx
+      flavor: m1.smaller
       key_name: { get_resource: key_pair }
       networks:
         - port: { get_resource: s_admin_port1 }
@@ -183,8 +183,8 @@ resources:
     depends_on: [ key_pair, bbdd_port2 ]
     properties:
       name: bbdd
-      image: cirros-0.3.4-x86_64-vnx
-      flavor: m1.tiny
+      image: xenial-server-cloudimg-amd64-vnx
+      flavor: m1.smaller
       key_name: { get_resource: key_pair }
       networks:
         - port: { get_resource: bbdd_port2 }
