@@ -5,16 +5,6 @@ parameters:
     type: string
     label: Key Name
     description: Name of key-pair to be used for the serversX 
-  image_id:
-    type: string
-    label: Image ID
-    description: Image to be used for compute instance
-    default: cirros-0.3.4-x86_64-vnx
-    constraints:
-      - allowed_values: [cirros-0.3.4-x86_64-vnx, xenial-server-cloudimg-amd64-vnx]
-        description: >
-          Value must be one of cirros-0.3.4-x86_64-vnx or
-          xenial-server-cloudimg-amd64-vnx.
 
 resources:
   security_group:
@@ -87,7 +77,7 @@ resources:
     depends_on: [ key_pair, s1_port1, s1_port2 ]
     properties:
       name: s1
-      image: cirros-0.3.4-x86_64-vnx
+      image: xenial-server-cloudimg-amd64-vnx
       flavor: m1.tiny
       key_name: { get_resource: key_pair }
       networks:
@@ -114,7 +104,7 @@ resources:
     depends_on: [ key_pair, s2_port1, s2_port2 ]
     properties:
       name: s2
-      image: cirros-0.3.4-x86_64-vnx
+      image: xenial-server-cloudimg-amd64-vnx
       flavor: m1.tiny
       key_name: { get_resource: key_pair }
       networks:
@@ -141,7 +131,7 @@ resources:
     depends_on: [ key_pair, s3_port1, s3_port2 ]
     properties:
       name: s3
-      image: cirros-0.3.4-x86_64-vnx
+      image: xenial-server-cloudimg-amd64-vnx
       flavor: m1.tiny
       key_name: { get_resource: key_pair }
       networks:
@@ -174,7 +164,7 @@ resources:
     depends_on: [ key_pair, s_admin_port1, s_admin_port2, s_admin_floating_ip ]
     properties:
       name: s_admin
-      image: cirros-0.3.4-x86_64-vnx
+      image: xenial-server-cloudimg-amd64-vnx
       flavor: m1.tiny
       key_name: { get_resource: key_pair }
       networks:
@@ -188,12 +178,13 @@ resources:
       security_groups: [ open ]
       fixed_ips:
         - subnet_id: { get_resource: subnet2 }
+          ip_address: 10.1.2.50
   bbdd:
     type: 'OS::Nova::Server'
     depends_on: [ key_pair, bbdd_port2 ]
     properties:
       name: bbdd
-      image: cirros-0.3.4-x86_64-vnx
+      image: xenial-server-cloudimg-amd64-vnx
       flavor: m1.tiny
       key_name: { get_resource: key_pair }
       networks:
