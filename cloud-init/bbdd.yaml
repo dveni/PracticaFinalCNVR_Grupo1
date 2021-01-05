@@ -12,11 +12,12 @@ apt_upgrade: true
 #   keyid: 7F0CEB10
 #   filename: 10gen.list
 # Install packages
-packages:
+#packages:
 #  - mongodb-10gen
-  - mongodb
+#  - mongodb
 #  - ntp
 
-#runcmd:
-# - [ sed, -i, "s/# replSet = setname/replSet = twitterdata/g", /etc/mongodb.conf ]
-# - [ restart, mongodb ]
+runcmd:
+  - sudo apt update
+  - sudo apt install -y mongodb
+

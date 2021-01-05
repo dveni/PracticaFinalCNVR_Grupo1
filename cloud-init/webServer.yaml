@@ -13,3 +13,7 @@ packages:
 #  - curl http://169.254.169.254/openstack/latest/meta_data.json > /home/index.html
 #  - cd /home
 #  - python -m SimpleHTTPServer 80
+
+runcmd:
+  - sudo apt-get update
+  - sudo apt-get install npm
