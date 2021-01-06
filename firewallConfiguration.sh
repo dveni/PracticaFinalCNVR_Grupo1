@@ -16,9 +16,9 @@ openstack firewall group rule create --protocol tcp --destination-port 80 --dest
 
 #Crear el firewall policy y añadir las reglas al policy
 openstack firewall group policy create --firewall-rule "fw_rule_sadmin" fwcnvr
-openstack firewall group policy add rule myfw "fw_rule_net1"
-openstack firewall group policy add rule myfw "fw_rule_net2"
-openstack firewall group policy add rule myfw "fw_rule_lb"
+openstack firewall group policy add rule fwcnvr "fw_rule_net1"
+openstack firewall group policy add rule fwcnvr "fw_rule_net2"
+openstack firewall group policy add rule fwcnvr "fw_rule_lb"
 
 #Crear el firewall group
 openstack firewall group create --ingress-firewall-policy "fwcnvr" --no-port
