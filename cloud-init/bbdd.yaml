@@ -1,23 +1,12 @@
 #cloud-config
 hostname: mongodb
-
 # Update apt database on first boot
 apt_update: true
 # Upgrade the instance on first boot
 apt_upgrade: true
-
-# Add 10gen MongoDB repo
-#apt_sources:
-#  - source: "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen"
-#   keyid: 7F0CEB10
-#   filename: 10gen.list
-# Install packages
-#packages:
-#  - mongodb-10gen
-#  - mongodb
-#  - ntp
-
+packages:
+    - mongodb
 runcmd:
-  - sudo apt update
-  - sudo apt install -y mongodb
-
+    - sudo apt update
+    - sudo apt install -y mongodb
+#    - [mkdir, -p, /data/db ]
