@@ -22,7 +22,7 @@ resources:
   group1project: 
         type: OS::Keystone::Project 
         properties: 
-          name: { get_param: project_name } 
+          name: { get_param: project_name }
           domain: default 
  
   group1_admin: 
@@ -36,7 +36,7 @@ resources:
         properties: 
           user: { get_resource: group1_admin } 
           roles:  
-            - {project: {get_resource: group1project}, role: admin}
+            - {project: {get_resource: group1project}, role: user}
  
   default_admin_role: 
         type: OS::Keystone::UserRoleAssignment 

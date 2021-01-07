@@ -25,19 +25,26 @@ sleep 30
 #Alternativa para crearlo desde la linea de comandos de Openstack
 #openstack project create --domain default --description "CNVR Project Group 1" group1project
 #openstack user create --domain default --project group1project --password xxxx --description "User for group1project CNVR" group1user
-#openstack role add --project group1project --user group1user admin
+#openstack role add --project group1project --user group1user user
 
-#PRIVILEGIOS PARA NUESTRO USUARIO ADMIN
+
+#PRIVILEGIOS PARA NUESTRO USUARIO
 #Usuario: group1user | Password: xxxx
 source bin/group1user-openrc.sh
 
+#IMAGES
+#glance image-create --name "bbdd-image" --file db.raw --disk-format raw --container-format bare --visibility public --progress
+#glance image-create --name "webserver-image" --file db.raw --disk-format raw --container-format bare --visibility public --progress
 
 
 #HEAT STACK
 openstack stack create -t scenario.yaml --parameter "key_name=key_group1" stackscenario
 
+#sleep 60
 
 #LOAD BALANCER
+#./loadBalancerConfiguration.sh
+
 
 #FIREWALL
 #./firewallConfiguration.sh

@@ -1,8 +1,5 @@
 #cloud-config
 hostname: admin
-apt_update: true
-apt_upgrade: true
-#runcmd:
-#        - ifconfig ens4 up
-#        - dhclient ens4
-#        - echo "nameserver 8.8.8.8 " > /etc/resolv.conf
+runcmd:
+  - ifconfig ens4 up 
+  - dhclient ens4

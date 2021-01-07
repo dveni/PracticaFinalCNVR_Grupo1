@@ -1,12 +1,7 @@
 #cloud-config
 hostname: mongodb
-# Update apt database on first boot
-apt_update: true
-# Upgrade the instance on first boot
-apt_upgrade: true
-packages:
-    - mongodb
 runcmd:
-    - sudo apt update
-    - sudo apt install -y mongodb
+  - ifconfig ens4 up 
+  - dhclient ens4
 #    - [mkdir, -p, /data/db ]
+#  - sudo service mongod start
