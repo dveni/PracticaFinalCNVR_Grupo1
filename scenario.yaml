@@ -83,7 +83,7 @@ resources:
     depends_on: [ key_pair, s1_port1, s1_port2 ]
     properties:
       name: s1
-      image: xenial-server-cloudimg-amd64-vnx
+      image: webserver-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
       user_data_format: SOFTWARE_CONFIG
@@ -113,7 +113,7 @@ resources:
     depends_on: [ key_pair, s2_port1, s2_port2 ]
     properties:
       name: s2
-      image: xenial-server-cloudimg-amd64-vnx
+      image: webserver-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
       user_data_format: SOFTWARE_CONFIG
@@ -143,7 +143,7 @@ resources:
     depends_on: [ key_pair, s3_port1, s3_port2 ]
     properties:
       name: s3
-      image: xenial-server-cloudimg-amd64-vnx
+      image: webserver-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
       user_data_format: SOFTWARE_CONFIG
@@ -179,7 +179,7 @@ resources:
     depends_on: [ key_pair, s_admin_port1, s_admin_port2, s_admin_floating_ip ]
     properties:
       name: s_admin
-      image: xenial-server-cloudimg-amd64-vnx
+      image: webserver-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
       user_data_format: SOFTWARE_CONFIG
@@ -201,7 +201,7 @@ resources:
     depends_on: [ key_pair, bbdd_port2 ]
     properties:
       name: bbdd
-      image: xenial-server-cloudimg-amd64-vnx
+      image: bbdd-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
       user_data_format: SOFTWARE_CONFIG

@@ -33,8 +33,15 @@ sleep 30
 source bin/group1user-openrc.sh
 
 #IMAGES
-#glance image-create --name "bbdd-image" --file db.raw --disk-format raw --container-format bare --visibility public --progress
-#glance image-create --name "webserver-image" --file db.raw --disk-format raw --container-format bare --visibility public --progress
+#BBDD
+wget https://www.dropbox.com/sh/0zf8sby5qrxratg/AAAwIVmdnDKpwQOy_8f_6-QXa?dl=0
+mv AAAwIVmdnDKpwQOy_8f_6-QXa?dl=0 bbdd-server.raw
+glance image-create --name "bbdd-image" --file bbdd-server.raw --disk-format raw --container-format bare --visibility public --progress
+
+#WEBSERVER
+wget https://www.dropbox.com/s/pk5r73pvykd1gf9/webserver.raw?dl=0
+mv webserver.raw?dl=0 webserver.raw
+glance image-create --name "webserver-image" --file webserver.raw --disk-format raw --container-format bare --visibility public --progress
 
 
 #HEAT STACK

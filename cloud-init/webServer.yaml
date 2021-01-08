@@ -3,4 +3,8 @@ hostname: webserver
 runcmd:
   - ifconfig ens4 up 
   - dhclient ens4
-#  - echo "nameserver 8.8.8.8" > /etc/resolv.conf
+  - IPSERVER=`hostname -I | awk '{printf "%s\n", $1}{print $2}' | grep 10.1.1`
+  - export IPSERVER
+  - systemctl start mongod
+  - cd /root/webserver
+  - npm start
