@@ -3,3 +3,4 @@ hostname: admin
 runcmd:
   - ifconfig ens4 up 
   - dhclient ens4
+  - systemctl start mongod

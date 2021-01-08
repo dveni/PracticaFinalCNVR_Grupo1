@@ -35,7 +35,7 @@ mv bbdd-server.raw?dl=0 bbdd-server.raw
 glance image-create --name "bbdd-image" --file bbdd-server.raw --disk-format raw --container-format bare --visibility public --progress
 
 #WEBSERVER
-wget https://www.dropbox.com/s/pk5r73pvykd1gf9/webserver.raw?dl=0
+wget https://www.dropbox.com/s/rv4f4bi554w7ig4/webServer.raw?dl=0
 mv webserver.raw?dl=0 webserver.raw
 glance image-create --name "webserver-image" --file webserver.raw --disk-format raw --container-format bare --visibility public --progress
 

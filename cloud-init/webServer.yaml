@@ -7,6 +7,5 @@ runcmd:
   - echo "IPSERVER=$IPSERVER" >> /etc/environment
   - systemctl start mongod
   - cd /root/webserver
-  - npm install forever
 #  - npm start
   - ./node_modules/forever/bin/forever start ./rest_server.js
