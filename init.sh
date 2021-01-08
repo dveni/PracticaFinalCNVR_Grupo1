@@ -28,11 +28,7 @@ sleep 30
 #openstack role add --project group1project --user group1user user
 
 
-#PRIVILEGIOS PARA NUESTRO USUARIO
-#Usuario: group1user | Password: xxxx
-source bin/group1user-openrc.sh
-
-#IMAGES
+#IMAGES (necesita roles de admin)
 #BBDD
 wget https://www.dropbox.com/s/x8mcmw29uqlo68l/bbdd-server.raw?dl=0
 mv bbdd-server.raw?dl=0 bbdd-server.raw
@@ -42,6 +38,11 @@ glance image-create --name "bbdd-image" --file bbdd-server.raw --disk-format raw
 wget https://www.dropbox.com/s/pk5r73pvykd1gf9/webserver.raw?dl=0
 mv webserver.raw?dl=0 webserver.raw
 glance image-create --name "webserver-image" --file webserver.raw --disk-format raw --container-format bare --visibility public --progress
+
+
+#PRIVILEGIOS PARA NUESTRO USUARIO
+#Usuario: group1user | Password: xxxx
+source bin/group1user-openrc.sh
 
 
 #HEAT STACK
