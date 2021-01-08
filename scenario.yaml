@@ -86,7 +86,7 @@ resources:
       image: webserver-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
-      user_data_format: SOFTWARE_CONFIG
+      user_data_format: RAW
       user_data: { get_file: cloud-init/webServer.yaml }
       networks:
         - port: { get_resource: s1_port1 }
@@ -116,7 +116,7 @@ resources:
       image: webserver-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
-      user_data_format: SOFTWARE_CONFIG
+      user_data_format: RAW
       user_data: { get_file: cloud-init/webServer.yaml }
       networks:
         - port: { get_resource: s2_port1 }
@@ -146,7 +146,7 @@ resources:
       image: webserver-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
-      user_data_format: SOFTWARE_CONFIG
+      user_data_format: RAW
       user_data: { get_file: cloud-init/webServer.yaml }
       networks:
         - port: { get_resource: s3_port1 }
@@ -182,7 +182,7 @@ resources:
       image: webserver-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
-      user_data_format: SOFTWARE_CONFIG
+      user_data_format: RAW
       user_data: { get_file: cloud-init/s_admin.yaml }
       networks:
         - port: { get_resource: s_admin_port1 }
@@ -204,7 +204,7 @@ resources:
       image: bbdd-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
-      user_data_format: SOFTWARE_CONFIG
+      user_data_format: RAW
       user_data: { get_file: cloud-init/bbdd.yaml }
       networks:
         - port: { get_resource: bbdd_port2 }

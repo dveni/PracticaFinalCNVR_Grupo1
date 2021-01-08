@@ -4,6 +4,8 @@
 /lab/cnvr/bin/get-openstack-tutorial.sh 
 
 #START SCENARIO [HAY QUE MODIFICAR LAS IMAGENES EN LOAD-IMG]
+rm /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml
+cp openstack_lab.xml /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml
 sudo vnx -f /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml -v --create 
 sudo vnx -f /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml -v -x start-all
 sudo vnx -f /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml -v -x load-img

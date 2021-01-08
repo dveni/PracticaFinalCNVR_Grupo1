@@ -4,7 +4,10 @@ runcmd:
   - ifconfig ens4 up 
   - dhclient ens4
   - IPSERVER=`hostname -I | awk '{printf "%s\n", $1}{print $2}' | grep 10.1.1`
-  - export IPSERVER
+  - echo "IPSERVER=$IPSERVER" >> /etc/environment
+#  - apt-get autoremove -y 
+#  - apt-get install chromium-browser -y
+  - echo "alias www='chromium-browser --no-sandbox > /dev/null 2>&amp;1 &amp;'" >> /root/.bash_aliases
   - systemctl start mongod
   - cd /root/webserver
   - npm start
