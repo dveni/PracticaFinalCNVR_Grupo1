@@ -36,7 +36,7 @@ glance image-create --name "bbdd-image" --file bbdd-server.raw --disk-format raw
 
 #WEBSERVER
 wget https://www.dropbox.com/s/rv4f4bi554w7ig4/webServer.raw?dl=0
-mv webserver.raw?dl=0 webserver.raw
+mv webServer.raw?dl=0 webserver.raw
 glance image-create --name "webserver-image" --file webserver.raw --disk-format raw --container-format bare --visibility public --progress
 
 
