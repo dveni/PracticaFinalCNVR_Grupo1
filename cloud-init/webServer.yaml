@@ -1,13 +1,13 @@
 #cloud-config
 hostname: webserver
+packages:
+  - npm
 runcmd:
   - ifconfig ens4 up 
   - dhclient ens4
   - IPSERVER=`hostname -I | awk '{printf "%s\n", $1}{print $2}' | grep 10.1.1`
   - echo "IPSERVER=$IPSERVER" >> /etc/environment
   - systemctl start mongod
-#  - service mongod start 
-  - cd /root/webServer
 #  - npm start
-  - pm2 start rest_server.js --name "consulta-medicos"
+  - pm2 start /root/webServer/rest_server.js --name "consulta-medicos"
 #  - ./node_modules/forever/bin/forever start ./rest_server.js
