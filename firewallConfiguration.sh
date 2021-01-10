@@ -9,7 +9,7 @@ IP_LB="$(neutron lbaas-loadbalancer-show lb | awk 'FNR == 14 {print $4}')"
 PORT_ID="$(openstack port list --fixed-ip subnet=subnet1,ip-address=10.1.1.1 -c ID -f value)"
 
 #Permitir acceso desde el exterior al puerto SSH(22) de s_admin 
-openstack firewall group rule create --protocol tcp --destination-port 22 --destination-ip-address "${IP_SADMIN}" --action allow --name fw_rule_sadmin
+openstack firewall group rule create --protocol tcp --destination-port 2020 --destination-ip-address "${IP_SADMIN}" --action allow --name fw_rule_sadmin
 
 #Permitir acceso desde el interior (10.1.1.0/24 - 10.1.2.0/24) a cualquier destino con cualquier protocolo
 openstack firewall group rule create --protocol any --source-ip-address 10.1.1.0/24 --action allow --name fw_rule_net1
