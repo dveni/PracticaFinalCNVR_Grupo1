@@ -25,7 +25,7 @@ sleep 5
 
 neutron lbaas-member-create --name lb-member-01 --subnet subnet1 --address 10.1.1.12 --protocol-port 8001 lb-http-pool-8001
 neutron lbaas-member-create --name lb-member-02 --subnet subnet1 --address 10.1.1.72 --protocol-port 8001 lb-http-pool-8001
-neutron lbaas-member-create --name lb-member-3 --subnet subnet1 --address 10.1.1.99 --protocol-port 8001 lb-http-pool-8001
+neutron lbaas-member-create --name lb-member-03 --subnet subnet1 --address 10.1.1.99 --protocol-port 8001 lb-http-pool-8001
 
 
 # Assign floating IP to LB
