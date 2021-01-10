@@ -1,4 +1,29 @@
-server1:
+heat_template_version: 2017-02-24
+description: Plantilla para definir un server del lb
+parameters:
+
+  app_port:
+    type: number
+    default: 8080
+    description: Port used by the servers
+  flavor:
+    type: string
+    description: Flavor used for servers
+    constraints:
+    - custom_constraint: nova.flavor
+  image:
+    type: string
+    description: Image used for servers
+    constraints:
+    - custom_constraint: glance.image
+  subnet:
+    type: string
+    description: Subnet on which the load balancer will be located
+    constraints:
+    - custom_constraint: neutron.subnet
+
+resources:
+  server1:
     type: OS::Nova::Server
     properties:
       name: server_%index%
