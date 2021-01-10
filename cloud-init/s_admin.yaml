@@ -3,4 +3,6 @@ hostname: admin
 runcmd:
   - ifconfig ens4 up 
   - dhclient ens4
+  - sed -i "s/.*\bPort\b.*/Port 2020/" /etc/ssh/sshd_config
+  - /etc/init.d/ssh restart
   - systemctl start mongod

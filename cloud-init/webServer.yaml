@@ -7,5 +7,6 @@ runcmd:
   - echo "IPSERVER=$IPSERVER" >> /etc/environment
   - systemctl start mongod
   - cd /root/webserver
+  - pm2 start rest_server.js --name "consulta-medicos"
 #  - npm start
-  - ./node_modules/forever/bin/forever start ./rest_server.js
+#  - ./node_modules/forever/bin/forever start ./rest_server.js
