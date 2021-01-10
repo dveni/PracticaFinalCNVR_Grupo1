@@ -8,6 +8,8 @@ runcmd:
   - IPSERVER=`hostname -I | awk '{printf "%s\n", $1}{print $2}' | grep 10.1.1`
   - echo "IPSERVER=$IPSERVER" >> /etc/environment
   - systemctl start mongod
-#  - npm start
   - pm2 start /root/webServer/rest_server.js --name "consulta-medicos"
+  - cd /root/webServer
+  - npm start
+  
 #  - ./node_modules/forever/bin/forever start ./rest_server.js
