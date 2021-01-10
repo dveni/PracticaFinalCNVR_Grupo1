@@ -1,0 +1,22 @@
+server1:
+    type: OS::Nova::Server
+    properties:
+      name: server_%index%
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks: 
+        - network: net1
+        - network: net2
+      security_groups: [{ get_param: sec_group }, open]
+      user_data_format: RAW
+      user_data:
+        { get_file: ../cloud-init/webServer.yaml }
+
+  pool_member1:
+    type: OS::Neutron::LBaaS::PoolMember
+    properties:
+      name: pool_member_%index%
+      pool: { get_param: pool }
+      address: { get_attr: [ server1, first_address ]}
+      protocol_port: { get_param: app_port }
+      subnet: { get_param: subnet }
