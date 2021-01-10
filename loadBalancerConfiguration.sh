@@ -5,7 +5,7 @@ source bin/group1user-openrc.sh
 
 neutron lbaas-loadbalancer-create --name lb subnet1
 
-sleep 5
+sleep 20
 
 neutron security-group-create lbaasv2
 
