@@ -129,24 +129,6 @@ outputs:
   s_admin_private_ip_net2:
     description: ADMIN SERVER PRIVATE IP NET2
     value: { get_attr: [ s_admin, networks, net2, 0 ] }
-  s1_private_ip_net1:
-    description: Private IP address of s1 NET1
-    value: { get_attr: [ s1, networks, net1, 0 ] }
-  s1_private_ip_net2:
-    description: Private IP address of s1 NET2
-    value: { get_attr: [ s1, networks, net2, 0 ] }
-  s2_private_ip_net1:
-    description: Private IP address of s2 NET1
-    value: { get_attr: [ s2, networks, net1, 0 ] }
-  s2_private_ip_net2:
-    description: Private IP address of s2 NET2
-    value: { get_attr: [ s2, networks, net2, 0 ] }
-  s3_private_ip_net1:
-    description: Private IP address of s3 NET1
-    value: { get_attr: [ s3, networks, net1, 0 ] }
-  s3_private_ip_net2:
-    description: Private IP address of s3 NET2
-    value: { get_attr: [ s3, networks, net2, 0 ] }
   bbdd_private_ip:
     description: Private IP address of BBDD
     value: { get_attr: [ bbdd, first_address ] }
