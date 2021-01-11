@@ -1,7 +1,5 @@
 #cloud-config
 hostname: webserver
-packages:
-  - npm
 runcmd:
   - ifconfig ens4 up 
   - dhclient ens4
