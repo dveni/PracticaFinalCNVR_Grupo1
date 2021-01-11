@@ -5,3 +5,4 @@ parameters:
         private_network: net1
         public_network: ExtNet
         subnet: subnet1
+        lb_port: 8001

@@ -111,6 +111,7 @@ resources:
   loadbalancer:
     type: OS::Neutron::LBaaS::LoadBalancer
     properties:
+      name: lb
       vip_subnet: { get_param: subnet }
 
   floating_ip:
