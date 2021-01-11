@@ -11,5 +11,3 @@ runcmd:
   - pm2 start /root/webServer/rest_server.js --name "consulta-medicos"
   - cd /root/webServer
   - npm start
-  
-#  - ./node_modules/forever/bin/forever start ./rest_server.js
