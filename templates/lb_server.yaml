@@ -27,12 +27,15 @@ parameters:
   pool:
     type: string
     description: pool for lb
+  name:
+    type: string
+    description: server name
 
 resources:
   server1:
     type: OS::Nova::Server
     properties:
-      name: server_%index%
+      name: { get_param: name }
       image: { get_param: image }
       flavor: { get_param: flavor }
       networks: 

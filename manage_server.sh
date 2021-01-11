@@ -18,9 +18,9 @@ fi
 
 if [ $ACTION == "CREATE" ]
 then
-	STACK_NAME=$2
-	echo "Creating a new server with stack $STACK_NAME..."
+	SERVER_NAME=$2
+	echo "Creating a new server $SERVER_NAME..."
 	cd templates/
-	openstack stack create -e server_properties.yaml -t lb_server.yaml $STACK_NAME
+	openstack stack create -e server_properties.yaml --parameter "name=$SERVER_NAME" -t lb_server.yaml $SERVER_NAME
 	cd ../
 fi

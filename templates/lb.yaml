@@ -75,6 +75,7 @@ resources:
       resource_def:
         type: lb_server.yaml
         properties:
+          name: server_%index%
           image: { get_param: image }
           flavor: { get_param: flavor }
           sec_group: { get_resource: sec_group }
