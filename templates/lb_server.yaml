@@ -50,6 +50,6 @@ resources:
     type: OS::Neutron::LBaaS::PoolMember
     properties:
       pool: { get_param: pool }
-      address: { get_attr: [ server1, first_address ]}
+      address: { get_attr: [ server1, networks, net1, 0]}
       protocol_port: { get_param: app_port }
       subnet: { get_param: subnet }
