@@ -1,17 +1,22 @@
 #!/bin/bash
 
 ACTION=$1
+source bin/group1user-openrc.sh
 
-if [$ACTION == "DELETE"]
+if [ $ACTION == "DELETE" ]
 then 
-	server_to_delete = "$(neutron lbaas-member-list lbstack-pool-ygdxv72n5mly | awk 'FNR==4{print $2}')"
-	echo "Removing server with id "$(server_to_delete)"..."
-	#neutron lbaas-member-delete "$(server_to_delete)"
-	nova delete "$(server_to_delete)"
+	server_to_delete="$(nova list | awk 'BEGIN {FS="|"}; {print $2, $3}' | awk '{
+	if ($2 ~ /server/ )
+	print $1
+	}' | awk 'FNR == 1'
+	)"
+	echo "Removing server with id "${server_to_delete}"..."
+	#neutron lbaas-member-delete "${server_to_delete}"
+	nova delete "${server_to_delete}"
 	echo "Server removed"
 fi
 
-if [$ACTION == "CREATE"]
+if [ $ACTION == "CREATE" ]
 then
 	STACK_NAME=$2
 	echo "Creating a new server with stack $STACK_NAME..."
