@@ -30,13 +30,13 @@ sleep 30
 
 #IMAGES (necesita roles de admin)
 #BBDD
-wget https://www.dropbox.com/s/x8mcmw29uqlo68l/bbdd-server.raw?dl=0
-mv bbdd-server.raw?dl=0 bbdd-server.raw
+#wget https://www.dropbox.com/s/x8mcmw29uqlo68l/bbdd-server.raw?dl=0
+#mv bbdd-server.raw?dl=0 bbdd-server.raw
 glance image-create --name "bbdd-image" --file bbdd-server.raw --disk-format raw --container-format bare --visibility public --progress
 
 #WEBSERVER
-wget https://www.dropbox.com/s/rv4f4bi554w7ig4/webServer.raw?dl=0
-mv webServer.raw?dl=0 webserver.raw
+#wget https://www.dropbox.com/s/rv4f4bi554w7ig4/webServer.raw?dl=0
+#mv webServer.raw?dl=0 webserver.raw
 glance image-create --name "webserver-image" --file webserver.raw --disk-format raw --container-format bare --visibility public --progress
 
 
@@ -52,7 +52,9 @@ openstack stack create -t scenario.yaml --parameter "key_name=key_group1" stacks
 
 #LOAD BALANCER
 #./loadBalancerConfiguration.sh
-
+cd templates/
+openstack stack create lbstack -e lb_properties.yaml -t lb.yaml
+cd ../
 
 #FIREWALL
 #./firewallConfiguration.sh

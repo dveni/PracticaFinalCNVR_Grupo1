@@ -21,6 +21,12 @@ parameters:
     description: Subnet on which the load balancer will be located
     constraints:
     - custom_constraint: neutron.subnet
+  sec_group:
+    type: string
+    description: security group for load balancer servers
+  pool:
+    type: string
+    description: pool for lb
 
 resources:
   server1:
@@ -40,7 +46,6 @@ resources:
   pool_member1:
     type: OS::Neutron::LBaaS::PoolMember
     properties:
-      name: pool_member_%index%
       pool: { get_param: pool }
       address: { get_attr: [ server1, first_address ]}
       protocol_port: { get_param: app_port }

@@ -1,0 +1,7 @@
+parameters:
+        app_port: 8001
+        flavor: m1.smaller
+        image: webserver-image
+        private_network: net1
+        public_network: ExtNet
+        subnet: subnet1

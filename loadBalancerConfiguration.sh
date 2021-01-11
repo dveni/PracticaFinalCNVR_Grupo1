@@ -17,9 +17,9 @@ neutron port-update --security-group lbaasv2 $(neutron lbaas-loadbalancer-show l
 
 
 neutron lbaas-listener-create --name lb-http-8001 --loadbalancer lb --protocol HTTP --protocol-port 8001
-sleep 5
+sleep 20
 neutron lbaas-pool-create --name lb-http-pool-8001 --lb-algorithm ROUND_ROBIN --listener lb-http-8001 --protocol HTTP
-sleep 5
+sleep 20
 
 s1="$(openstack server show s1 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
 s2="$(openstack server show s2 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
