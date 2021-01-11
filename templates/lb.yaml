@@ -42,6 +42,7 @@ resources:
   sec_group:
     type: OS::Neutron::SecurityGroup
     properties:
+      name: lbaas_sec_group
       rules:
       - remote_ip_prefix: 0.0.0.0/0
         protocol: tcp
@@ -97,6 +98,7 @@ resources:
       lb_algorithm: ROUND_ROBIN
       protocol: HTTP
       listener: { get_resource: listener }
+      name: http-pool
 
   listener:
     type: OS::Neutron::LBaaS::Listener
