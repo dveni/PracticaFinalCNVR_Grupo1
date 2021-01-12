@@ -21,9 +21,9 @@ sleep 20
 neutron lbaas-pool-create --name lb-http-pool-8001 --lb-algorithm ROUND_ROBIN --listener lb-http-8001 --protocol HTTP
 sleep 20
 
-s1="$(openstack server show s1 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
-s2="$(openstack server show s2 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
-s3="$(openstack server show s3 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
+s1="$(openstack server show server_1 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
+s2="$(openstack server show server_2 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
+s3="$(openstack server show server_3 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
 neutron lbaas-member-create --name lb-member-01 --subnet subnet1 --address "${s1}" --protocol-port 8001 lb-http-pool-8001
 neutron lbaas-member-create --name lb-member-02 --subnet subnet1 --address "${s2}" --protocol-port 8001 lb-http-pool-8001
 neutron lbaas-member-create --name lb-member-03 --subnet subnet1 --address "${s3}" --protocol-port 8001 lb-http-pool-8001
@@ -34,3 +34,5 @@ ID_LB="$( neutron lbaas-loadbalancer-list -c id -f value )"
 VIP_PORT_LB="$( neutron lbaas-loadbalancer-show -c vip_port_id -f value "${ID_LB}" )"
 ID_LB_FIP="$( openstack ip floating create ExtNet -c id -f value )"
 neutron floatingip-associate "${ID_LB_FIP}" "${VIP_PORT_LB}"
+
+echo "The floating ip of the load balancer is: " "$(openstack ip floating show 28586574-cd53-42c5-90ff-795b5839cca4 -c floating_ip_address -f value)"
