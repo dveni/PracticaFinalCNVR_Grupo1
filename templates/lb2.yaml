@@ -67,21 +67,71 @@ resources:
 # The lb_server template would create the
 # server and member resources.
 
-  group:
-    type: OS::Heat::ResourceGroup
-    depends_on: [ sec_group, pool ]
+  server1:
+    type: OS::Nova::Server
     properties:
-      count: 3
-      resource_def:
-        type: lb_server.yaml
-        properties:
-          name: server_%index%
-          image: { get_param: image }
-          flavor: { get_param: flavor }
-          sec_group: lbaas_sec_group
-          pool: http-pool
-          app_port: { get_param: app_port }
-          subnet: { get_param: subnet }
+      name: server_1
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks: 
+        - network: net1
+        - network: net2
+      security_groups: [{ get_resource: sec_group }, open]
+      user_data_format: RAW
+      user_data:
+        { get_file: ../cloud-init/webServer.yaml }
+
+  pool_member1:
+    type: OS::Neutron::LBaaS::PoolMember
+    properties:
+      pool: { get_resource: pool }
+      address: { get_attr: [ server1, networks, net1, 0]}
+      protocol_port: { get_param: app_port }
+      subnet: { get_param: subnet }
+
+  server2:
+    type: OS::Nova::Server
+    properties:
+      name: server_2
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks: 
+        - network: net1
+        - network: net2
+      security_groups: [{ get_resource: sec_group }, open]
+      user_data_format: RAW
+      user_data:
+        { get_file: ../cloud-init/webServer.yaml }
+
+  pool_member2:
+    type: OS::Neutron::LBaaS::PoolMember
+    properties:
+      pool: { get_resource: pool }
+      address: { get_attr: [ server2, networks, net1, 0]}
+      protocol_port: { get_param: app_port }
+      subnet: { get_param: subnet }
+
+  server3:
+    type: OS::Nova::Server
+    properties:
+      name: server_3
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks: 
+        - network: net1
+        - network: net2
+      security_groups: [{ get_resource: sec_group }, open]
+      user_data_format: RAW
+      user_data:
+        { get_file: ../cloud-init/webServer.yaml }
+
+  pool_member3:
+    type: OS::Neutron::LBaaS::PoolMember
+    properties:
+      pool: { get_resource: pool }
+      address: { get_attr: [ server3, networks, net1, 0]}
+      protocol_port: { get_param: app_port }
+      subnet: { get_param: subnet }
 
 
   monitor:
