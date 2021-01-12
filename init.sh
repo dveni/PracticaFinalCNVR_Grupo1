@@ -51,10 +51,10 @@ openstack stack create -t scenario.yaml --parameter "key_name=key_group1" stacks
 sleep 120
 
 #LOAD BALANCER
-#./loadBalancerConfiguration.sh
-cd templates/
-openstack stack create lbstack -e lb_properties.yaml -t lb.yaml
-cd ../
+./loadBalancerConfiguration.sh
+#cd templates/
+#openstack stack create lbstack -e lb_properties.yaml -t lb.yaml
+#cd ../
 
 #FIREWALL
 #./firewallConfiguration.sh

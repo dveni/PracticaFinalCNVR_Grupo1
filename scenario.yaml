@@ -119,6 +119,48 @@ resources:
       networks:
         - port: { get_resource: bbdd_port2 }
 
+  server1:
+    type: OS::Nova::Server
+    properties:
+      name: { get_param: name }
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks: 
+        - network: net1
+        - network: net2
+      security_groups: [open]
+      user_data_format: RAW
+      user_data:
+        { get_file: ../cloud-init/webServer.yaml }
+  
+  server2:
+    type: OS::Nova::Server
+    properties:
+      name: server_1
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks: 
+        - network: net1
+        - network: net2
+      security_groups: [open]
+      user_data_format: RAW
+      user_data:
+        { get_file: ../cloud-init/webServer.yaml }
+  
+  server3:
+    type: OS::Nova::Server
+    properties:
+      name: server_2
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks: 
+        - network: net1
+        - network: net2
+      security_groups: [open]
+      user_data_format: RAW
+      user_data:
+        { get_file: ../cloud-init/webServer.yaml }
+
 outputs:
   s_admin_floating_ip:
     description: ADMIN SERVER FLOATING IP
