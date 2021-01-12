@@ -6,6 +6,13 @@ parameters:
     type: string
     label: Key Name
     description: Name of key-pair to be used for the serversX 
+  image:
+    type: string
+    description: Image used by servers
+  flavor:
+    type: string
+    description: Flavor used by servers
+
 
 resources:
   security_group:
@@ -122,44 +129,44 @@ resources:
   server1:
     type: OS::Nova::Server
     properties:
-      name: { get_param: name }
-      image: { get_param: image }
-      flavor: { get_param: flavor }
-      networks: 
-        - network: net1
-        - network: net2
-      security_groups: [open]
-      user_data_format: RAW
-      user_data:
-        { get_file: ../cloud-init/webServer.yaml }
-  
-  server2:
-    type: OS::Nova::Server
-    properties:
       name: server_1
       image: { get_param: image }
       flavor: { get_param: flavor }
       networks: 
-        - network: net1
-        - network: net2
+        - network: { get_resource: net1 }
+        - network: { get_resource: net2 }
       security_groups: [open]
       user_data_format: RAW
       user_data:
-        { get_file: ../cloud-init/webServer.yaml }
+        { get_file: cloud-init/webServer.yaml }
   
-  server3:
+  server2:
     type: OS::Nova::Server
     properties:
       name: server_2
       image: { get_param: image }
       flavor: { get_param: flavor }
       networks: 
-        - network: net1
-        - network: net2
+        - network: { get_resource: net1 }
+        - network: { get_resource: net2 }
       security_groups: [open]
       user_data_format: RAW
       user_data:
-        { get_file: ../cloud-init/webServer.yaml }
+        { get_file: cloud-init/webServer.yaml }
+  
+  server3:
+    type: OS::Nova::Server
+    properties:
+      name: server_3
+      image: { get_param: image }
+      flavor: { get_param: flavor }
+      networks: 
+        - network: { get_resource: net1 }
+        - network: { get_resource: net2 }
+      security_groups: [open]
+      user_data_format: RAW
+      user_data:
+        { get_file: cloud-init/webServer.yaml }
 
 outputs:
   s_admin_floating_ip:

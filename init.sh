@@ -46,7 +46,7 @@ source bin/group1user-openrc.sh
 
 
 #HEAT STACK
-openstack stack create -t scenario.yaml --parameter "key_name=key_group1" stackscenario
+openstack stack create stackscenario -e templates/server_properties.yaml --parameter "key_name=key_group1" -t scenario.yaml
 
 sleep 120
 
