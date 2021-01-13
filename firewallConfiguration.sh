@@ -19,9 +19,12 @@ openstack firewall group rule create --protocol any --source-ip-address 10.1.2.0
 #Permitir acceso desde el exterior al puerto WWW(80) del Balanceador de carga
 openstack firewall group rule create --protocol tcp --destination-port 80 --destination-ip-address "${IP_LB}" --action allow --name fw_rule_lb
 sleep 5
+openstack firewall group rule create --protocol tcp --destination-port 8001 --destination-ip-address "${IP_LB}" --action allow --name fw_rule_web
+sleep 5
 
 #Crear los firewall policy y añadir las reglas al policy
 openstack firewall group policy create --firewall-rule fw_rule_sadmin --firewall-rule fw_rule_lb my-ingress-policy
+openstack firewall group policy create --firewall-rule fw_rule_sadmin --firewall-rule fw_rule_web my-ingress-policy
 openstack firewall group policy create --firewall-rule fw_rule_net1 --firewall-rule fw_rule_net2 my-egress-policy
 sleep 5
 

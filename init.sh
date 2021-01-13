@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #START OPENSTACK
-/lab/cnvr/bin/get-openstack-tutorial.sh 
+/lab/cnvr/bin/get-openstack-tutorial.sh
 
 #START SCENARIO [HAY QUE MODIFICAR LAS IMAGENES EN LOAD-IMG]
 sudo vnx -f /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml -v --create 
@@ -48,13 +48,13 @@ source bin/group1user-openrc.sh
 #HEAT STACK
 openstack stack create -t scenario.yaml --parameter "key_name=key_group1" stackscenario
 
-sleep 120
+#sleep 50
 
 #LOAD BALANCER
 #./loadBalancerConfiguration.sh
-cd templates/
-openstack stack create lbstack -e lb_properties.yaml -t lb.yaml
-cd ../
+#cd templates/
+#openstack stack create lbstack -e lb_properties.yaml -t lb.yaml
+#cd ../
 
 #FIREWALL
 #./firewallConfiguration.sh
