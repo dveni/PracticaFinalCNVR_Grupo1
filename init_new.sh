@@ -35,7 +35,7 @@ openstack stack create -t create-project.yaml --parameter "project_name=group1pr
 glance image-create --name "bbdd-image" --file bbdd-server.raw --disk-format raw --container-format bare --visibility public --progress
 
 #WEBSERVER
-#wget https://www.dropbox.com/s/wk8snabpf4fzeux/webserver.raw?dl=0
+#wget https://www.dropbox.com/s/e0khv7ybspi28my/webserver.raw?dl=0
 #mv webserver.raw?dl=0 webserver.raw
 glance image-create --name "webserver-image" --file webserver.raw --disk-format raw --container-format bare --visibility public --progress
 
