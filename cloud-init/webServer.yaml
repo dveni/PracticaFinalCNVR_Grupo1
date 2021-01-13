@@ -7,4 +7,5 @@ runcmd:
   - echo "IPSERVER=$IPSERVER" >> /etc/environment
   - systemctl start mongod
   - cd /root/webServer
+  - export IPSERVER
   - npm start

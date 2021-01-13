@@ -1,8 +1,6 @@
 #cloud-config
 hostname: mongodb
 runcmd:
-  - ifconfig ens4 up 
-  - dhclient ens4
   - systemctl start mongod
   - cd /root/webServer
   - npm run seed

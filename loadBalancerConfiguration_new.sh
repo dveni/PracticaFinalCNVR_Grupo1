@@ -21,17 +21,6 @@ sleep 40
 neutron lbaas-pool-create --name lb-http-pool-8001 --lb-algorithm ROUND_ROBIN --listener lb-http-8001 --protocol HTTP
 sleep 30
 
-s1="$(openstack server show s1 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
-s2="$(openstack server show s2 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
-s3="$(openstack server show s3 -c addresses -f value | awk 'FNR == 1 {print $2}' | awk -F "=" '{print $2}')"
-neutron lbaas-member-create --name lb-member-01 --subnet subnet1 --address "${s1}" --protocol-port 8001 lb-http-pool-8001
-sleep 10
-neutron lbaas-member-create --name lb-member-02 --subnet subnet1 --address "${s2}" --protocol-port 8001 lb-http-pool-8001
-sleep 10
-neutron lbaas-member-create --name lb-member-03 --subnet subnet1 --address "${s3}" --protocol-port 8001 lb-http-pool-8001
-sleep 10
-
-
 # Assign floating IP to LB
 ID_LB="$( neutron lbaas-loadbalancer-list -c id -f value )"
 VIP_PORT_LB="$( neutron lbaas-loadbalancer-show -c vip_port_id -f value "${ID_LB}" )"

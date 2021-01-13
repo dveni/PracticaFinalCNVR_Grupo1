@@ -46,20 +46,22 @@ source bin/group1user-openrc.sh
 
 
 #HEAT STACK
-openstack stack create stackscenario --parameter "key_name=key_group1" -t scenario.yaml
+openstack stack create stackscenario --parameter "key_name=key_group1" -t scenario_new.yaml
 
-read -p "Espere a que termine la configuracion del stack para arracnar el balanceador"
+read -p "Espere a que termine la configuracion del stack para arrancar el balanceador"
 #LOAD BALANCER
-./loadBalancerConfiguration.sh
+./loadBalancerConfiguration_new.sh
 
-#cd templates/
-#openstack stack create lbstack -e lb_properties.yaml -t lb.yaml
-#cd ../
+
+read -p "Espere a que termine la configuracion del balanceador para arrancar los servidores"
+./manage_server.sh CREATE s1
+./manage_server.sh CREATE s2
+./manage_server.sh CREATE s3
+
 
 read -p "Espere a que termine la configuracion del balanceador para arrancar el firewall"
 #FIREWALL
 ./firewallConfiguration.sh
-
 
 
 

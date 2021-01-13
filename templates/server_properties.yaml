@@ -3,6 +3,6 @@ parameters:
         flavor: m1.smaller
         image: webserver-image
         subnet: subnet1
-        sec_group: lbaas_sec_group
-        pool: http-pool
+        sec_group: lbaasv2 
+        pool: lb-http-pool-8001
 
