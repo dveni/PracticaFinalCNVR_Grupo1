@@ -1,7 +1,8 @@
 #cloud-config
 hostname: mongodb
 runcmd:
-  - systemctl start mongod
+  - 'sed -i "s/.*\bbindIp\b.*/  bindIp: 10.1.2.50/" /etc/mongod.conf'
+  - systemctl restart mongod
   - cd /root/webServer
   - npm run seed
 #    - [mkdir, -p, /data/db ]

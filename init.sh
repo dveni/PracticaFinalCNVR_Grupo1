@@ -4,6 +4,8 @@
 /lab/cnvr/bin/get-openstack-tutorial.sh
 
 #START SCENARIO [HAY QUE MODIFICAR LAS IMAGENES EN LOAD-IMG]
+rm /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml
+cp xml/openstack_lab.xml /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml
 sudo vnx -f /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml -v --create 
 sudo vnx -f /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml -v -x start-all
 sudo vnx -f /mnt/tmp/openstack_lab-stein_4n_classic_ovs-v06/openstack_lab.xml -v -x load-img
@@ -32,7 +34,7 @@ openstack stack create -t create-project.yaml --parameter "project_name=group1pr
 #BBDD
 #wget https://www.dropbox.com/s/r73z17ze26apxlx/bbdd-server.raw?dl=0
 #mv bbdd-server.raw?dl=0 bbdd-server.raw
-glance image-create --name "bbdd-image" --file bbdd-server.raw --disk-format raw --container-format bare --visibility public --progress
+#glance image-create --name "bbdd-image" --file bbdd-server.raw --disk-format raw --container-format bare --visibility public --progress
 
 #WEBSERVER
 #wget https://www.dropbox.com/s/wk8snabpf4fzeux/webserver.raw?dl=0
@@ -48,7 +50,7 @@ source bin/group1user-openrc.sh
 #HEAT STACK
 openstack stack create stackscenario --parameter "key_name=key_group1" -t scenario.yaml
 
-read -p "Espere a que termine la configuracion del stack para arracnar el balanceador"
+read -p "Espere a que termine la configuracion del stack para arrancar el balanceador"
 #LOAD BALANCER
 ./loadBalancerConfiguration.sh
 
@@ -59,9 +61,6 @@ read -p "Espere a que termine la configuracion del stack para arracnar el balanc
 read -p "Espere a que termine la configuracion del balanceador para arrancar el firewall"
 #FIREWALL
 ./firewallConfiguration.sh
-
-
-
 
 #COMANDOS UTILES
 #openstack orchestration template validate -t scenario.yaml

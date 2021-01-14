@@ -201,7 +201,7 @@ resources:
     depends_on: [ key_pair, bbdd_port2 ]
     properties:
       name: bbdd
-      image: bbdd-image
+      image: webserver-image
       flavor: m1.smaller
       key_name: { get_resource: key_pair }
       user_data_format: RAW
